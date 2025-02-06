@@ -10,6 +10,8 @@ import Combine
 
 @MainActor
 final class GameViewModel: ObservableObject {
+    @ObservedObject private var gameManager = GameManager.shared
+    
     // MARK: - Published Properties
     @Published private(set) var gameState: GameState
     @Published var vertices: [[Vertex]]
@@ -22,6 +24,9 @@ final class GameViewModel: ObservableObject {
     private var lastSpawnTime: TimeInterval = 0
     private var animationTimer: AnyCancellable?
     private var safeAreaTop: CGFloat = 0
+    private var isScoreProcessed = false
+    
+    private let settings = SettingsManager.shared
     
     // MARK: - Init
     init(gameMode: GameMode = .oneFinger) {
@@ -77,6 +82,7 @@ final class GameViewModel: ObservableObject {
             let first = triangleVertices.removeFirst()
             triangleVertices.append(first)
             vertices[index] = triangleVertices
+            settings.vibrate()
         }
     }
     
@@ -193,6 +199,7 @@ final class GameViewModel: ObservableObject {
         triangleRotations = gameState.gameMode == .oneFinger ? [0] : [0, 0]
         fallingElements.removeAll()
         lastSpawnTime = CACurrentMediaTime()
+        isScoreProcessed = false
         
         let initialVertices = [
             Vertex(element: .fire),
@@ -209,8 +216,16 @@ final class GameViewModel: ObservableObject {
         }
     }
     
+    private func processScore() {
+        guard !isScoreProcessed else { return }
+        gameManager.addPoints(gameState.score)
+        gameManager.updateHighScore(score: gameState.score, mode: gameState.gameMode)
+        isScoreProcessed = true
+    }
+    
     private func endGame() {
         gameState.isGameOver = true
+        processScore()
         animationTimer?.cancel()
         animationTimer = nil
     }
@@ -227,6 +242,7 @@ final class GameViewModel: ObservableObject {
     }
     
     func cleanup() {
+        processScore()
         animationTimer?.cancel()
         animationTimer = nil
     }

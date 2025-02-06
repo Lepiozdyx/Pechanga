@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct MainMenuView: View {
+    @StateObject private var gameManager = GameManager.shared
+    @State private var isMusicEnabled = SettingsManager.shared.isMusicEnabled
+    @Environment(\.scenePhase) private var scenePhase
+    private let settings = SettingsManager.shared
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Backgr()
                 
                 VStack(spacing: 10) {
-                    Counter(value: 100)
+                    Counter(value: gameManager.totalPoints)
                     
                     Spacer()
                     
@@ -34,7 +39,7 @@ struct MainMenuView: View {
                         .buttonStyle(.plain)
                         
                         NavigationLink {
-                            // HighScoreView()
+                             HighScoreView()
                         } label: {
                             CapsuleButton(text: "HIGH SCORE", width: 260, height: 60)
                         }
@@ -43,14 +48,14 @@ struct MainMenuView: View {
                     
                     HStack {
                         NavigationLink {
-                            // RulesView()
+                             RulesView()
                         } label: {
                             CapsuleButton(text: "RULES", width: 260, height: 54)
                         }
                         .buttonStyle(.plain)
                         
                         NavigationLink {
-                            // OptionsView()
+                             OptionsView()
                         } label: {
                             CapsuleButton(text: "OPTIONS", width: 260, height: 54)
                         }
@@ -62,6 +67,19 @@ struct MainMenuView: View {
             }
         }
         .navigationViewStyle(.stack)
+        .onAppear {
+            settings.playBackgroundMusic()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .active:
+                settings.playBackgroundMusic()
+            case .background, .inactive:
+                settings.stopBackgroundMusic()
+            @unknown default:
+                break
+            }
+        }
     }
 }
 
