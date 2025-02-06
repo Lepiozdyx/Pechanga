@@ -1,14 +1,14 @@
 //
-//  OneFingerGame.swift
+//  TwoFingersGameView.swift
 //  Pechanga
 //
-//  Created by Alex on 03.02.2025.
+//  Created by Alex on 06.02.2025.
 //
 
 import SwiftUI
 
-struct OneFingerGameView: View {
-    @StateObject private var viewModel = GameViewModel(gameMode: .oneFinger)
+struct TwoFingersGameView: View {
+    @StateObject private var viewModel = GameViewModel(gameMode: .twoFingers)
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     
@@ -20,7 +20,7 @@ struct OneFingerGameView: View {
                 // Game area with falling elements
                 gameArea
                 
-                // Top bar
+                // Top bar with score and lives
                 topBar
                 
                 // Overlays
@@ -52,8 +52,8 @@ struct OneFingerGameView: View {
     }
     
     private var topBar: some View {
-        VStack {
-            HStack {
+        VStack(spacing: 8) {
+            HStack(alignment: .top) {
                 TopBarButton {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         viewModel.pauseGame()
@@ -62,9 +62,12 @@ struct OneFingerGameView: View {
                 
                 Spacer()
                 
-                Counter(value: viewModel.gameState.score)
+                VStack(alignment: .trailing) {
+                    Counter(value: viewModel.gameState.score)
+                    LivesCounter(lives: viewModel.gameState.lives)
+                }
             }
-            
+
             Spacer()
         }
         .padding()
@@ -82,13 +85,23 @@ struct OneFingerGameView: View {
                 }
             }
             
-            // Triangle at the bottom
-            Triangle(
-                vertices: viewModel.vertices[0],
-                rotation: viewModel.triangleRotations[0],
-                triangleIndex: 0
-            ) { index in
-                viewModel.rotateTriangle(at: index)
+            // Two triangles at the bottom
+            HStack(spacing: GameConfig.triangleSpacing) {
+                Triangle(
+                    vertices: viewModel.vertices[0],
+                    rotation: viewModel.triangleRotations[0],
+                    triangleIndex: 0
+                ) { index in
+                    viewModel.rotateTriangle(at: index)
+                }
+                
+                Triangle(
+                    vertices: viewModel.vertices[1],
+                    rotation: viewModel.triangleRotations[1],
+                    triangleIndex: 1
+                ) { index in
+                    viewModel.rotateTriangle(at: index)
+                }
             }
         }
     }
@@ -106,5 +119,5 @@ struct OneFingerGameView: View {
 }
 
 #Preview {
-    OneFingerGameView()
+    TwoFingersGameView()
 }

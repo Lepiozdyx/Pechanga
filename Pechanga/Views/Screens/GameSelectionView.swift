@@ -24,7 +24,7 @@ struct GameSelectionView: View {
                 .buttonStyle(.plain)
 
                 NavigationLink {
-                    // TwoFingersGameView()
+                     TwoFingersGameView()
                 } label: {
                     CapsuleButton(text: "TWO FINGERS", width: 260, height: 54)
                 }
