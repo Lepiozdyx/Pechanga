@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Tutorial: View {
+struct TutorialView: View {
     @State private var isAnimate = false
     
     var body: some View {
@@ -87,7 +87,7 @@ struct Tutorial: View {
                         
                         //Navigate to GameSelectionView()
                         NavigationLink {
-                            GameSelection()
+                            GameSelectionView()
                         } label: {
                             CapsuleButton(text: "CONTINUE", width: 240, height: 54)
                         }
@@ -104,6 +104,6 @@ struct Tutorial: View {
 
 #Preview {
     NavigationView {
-        Tutorial()
+        TutorialView()
     }
 }

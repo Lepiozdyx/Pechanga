@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainMenu: View {
+struct MainMenuView: View {
     var body: some View {
         NavigationView {
             ZStack {
@@ -19,7 +19,7 @@ struct MainMenu: View {
                     Spacer()
                     
                     NavigationLink {
-                        Tutorial()
+                        TutorialView()
                     } label: {
                         CapsuleButton(text: "GAMES", width: 260, height: 54)
                     }
@@ -66,5 +66,5 @@ struct MainMenu: View {
 }
 
 #Preview {
-    MainMenu()
+    MainMenuView()
 }

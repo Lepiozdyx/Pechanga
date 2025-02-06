@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OneFingerGame: View {
+struct OneFingerGameView: View {
     @StateObject private var viewModel = GameViewModel()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -17,10 +17,12 @@ struct OneFingerGame: View {
             ZStack {
                 Backgr()
                 
-                // Top bar
+                underlay
                 
                 // Game area with falling elements
                 gameArea
+                
+                // Top bar
                 topBar
                 
                 // Overlays
@@ -49,6 +51,17 @@ struct OneFingerGame: View {
             }
         }
         .navigationBarHidden(true)
+    }
+    
+    private var underlay: some View {
+        Rectangle()
+            .frame(maxWidth: UIScreen.main.bounds.width * 0.5, maxHeight: .infinity)
+            .foregroundStyle(Color.asphaltGradient)
+            .overlay {
+                Rectangle()
+                    .stroke(Color.milkcoffee, lineWidth: 0.5)
+            }
+            .ignoresSafeArea()
     }
     
     private var topBar: some View {
@@ -105,5 +118,5 @@ struct OneFingerGame: View {
 }
 
 #Preview {
-    OneFingerGame()
+    OneFingerGameView()
 }

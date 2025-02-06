@@ -41,8 +41,7 @@ struct Vertex: Equatable {
 enum GameConfig {
     static let elementSpawnInterval: TimeInterval = 2.0
     static let elementFallDuration: TimeInterval = 4.0
-    static let elementSpeed: CGFloat = 2.0
-    static let elementSize: CGFloat = 40
+    static let elementSize: CGFloat = 50
     static let rotationAngle: Double = 120
 }
 

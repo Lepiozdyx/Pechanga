@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameSelection: View {
+struct GameSelectionView: View {
     var body: some View {
         ZStack {
             Backgr()
@@ -17,7 +17,7 @@ struct GameSelection: View {
 
             HStack {
                 NavigationLink {
-                     OneFingerGame()
+                     OneFingerGameView()
                 } label: {
                     CapsuleButton(text: "ONE FINGER", width: 260, height: 54)
                 }
@@ -38,6 +38,6 @@ struct GameSelection: View {
 
 #Preview {
     NavigationView {
-        GameSelection()
+        GameSelectionView()
     }
 }

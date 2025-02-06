@@ -34,7 +34,7 @@ struct Counter: View {
                         .frame(maxWidth: 30, maxHeight: 20)
                     }
                 
-                CapsuleButton(text: "\(value)", width: 120, height: 35)
+                CapsuleButton(text: "\(value)", width: 100, height: 35)
             }
         }
     }
