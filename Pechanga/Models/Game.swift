@@ -13,12 +13,65 @@ enum GameMode {
 }
 
 enum Element: String, CaseIterable, Codable {
-    case fire
-    case ice
-    case earth
+    case fire, ice, earth
+    case fire1, ice1, earth1
+    case fire2, ice2, earth2
     
     var imageName: String {
         rawValue
+    }
+    
+    var baseElement: Element {
+        switch self {
+        case .fire, .fire1, .fire2:
+            return .fire
+        case .ice, .ice1, .ice2:
+            return .ice
+        case .earth, .earth1, .earth2:
+            return .earth
+        }
+    }
+}
+
+enum ElementSkin: String, CaseIterable, Codable {
+    case defaultSkin = "default"
+    case skin1 = "skin1"
+    case skin2 = "skin2"
+    
+    var price: Int {
+        switch self {
+        case .defaultSkin:
+            return 0
+        case .skin1:
+            return 100
+        case .skin2:
+            return 150
+        }
+    }
+    
+    var elements: [Element] {
+        switch self {
+        case .defaultSkin:
+            return [.ice, .fire, .earth]
+        case .skin1:
+            return [.ice1, .fire1, .earth1]
+        case .skin2:
+            return [.ice2, .fire2, .earth2]
+        }
+    }
+}
+
+enum SkinPurchaseError: Error {
+    case insufficientPoints
+    case alreadyOwned
+    
+    var message: String {
+        switch self {
+        case .insufficientPoints:
+            return "Not enough points to purchase this skin"
+        case .alreadyOwned:
+            return "You already own this skin"
+        }
     }
 }
 

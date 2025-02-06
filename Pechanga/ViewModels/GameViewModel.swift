@@ -11,6 +11,7 @@ import Combine
 @MainActor
 final class GameViewModel: ObservableObject {
     @ObservedObject private var gameManager = GameManager.shared
+    @ObservedObject private var skinManager = SkinManager.shared
     
     // MARK: - Published Properties
     @Published private(set) var gameState: GameState
@@ -30,14 +31,15 @@ final class GameViewModel: ObservableObject {
     
     // MARK: - Init
     init(gameMode: GameMode = .oneFinger) {
-        self.gameState = GameState(gameMode: gameMode)
-        
+        let skinManager = SkinManager.shared
+        let currentElements = skinManager.selectedSkin.elements
         let initialVertices = [
-            Vertex(element: .fire),
-            Vertex(element: .earth),
-            Vertex(element: .ice)
+            Vertex(element: currentElements[0]),  // ice
+            Vertex(element: currentElements[2]),  // earth
+            Vertex(element: currentElements[1])   // fire
         ]
         
+        self.gameState = GameState(gameMode: gameMode)
         self.vertices = gameMode == .oneFinger ? [initialVertices] : [initialVertices, initialVertices]
         self.triangleRotations = gameMode == .oneFinger ? [0] : [0, 0]
     }
@@ -124,7 +126,11 @@ final class GameViewModel: ObservableObject {
         guard triangleIndex < trianglePositions.count else { return }
         
         let targetPosition = trianglePositions[triangleIndex]
-        let randomElement = Element.allCases.randomElement() ?? .fire
+        
+        // Get random base element and map it to current skin
+        let baseElement = Element.allCases.filter { $0.baseElement == $0 }.randomElement() ?? .fire
+        let currentSkinElements = skinManager.selectedSkin.elements
+        let skinElement = currentSkinElements.first { $0.baseElement == baseElement } ?? baseElement
         
         let startPosition = CGPoint(
             x: targetPosition.x,
@@ -133,7 +139,7 @@ final class GameViewModel: ObservableObject {
         
         withAnimation(.easeIn(duration: 0.3)) {
             let newElement = FallingElement(
-                element: randomElement,
+                element: skinElement,
                 position: startPosition,
                 startTime: CACurrentMediaTime(),
                 targetTriangleIndex: triangleIndex
@@ -179,7 +185,8 @@ final class GameViewModel: ObservableObject {
         let topVertex = vertices[triangleIndex][0]
         
         withAnimation(.easeOut(duration: 0.2)) {
-            if topVertex.element == fallingElement.element {
+            // Compare base elements for collision check
+            if topVertex.element.baseElement == fallingElement.element.baseElement {
                 gameState.incrementScore()
                 if let index = fallingElements.firstIndex(where: { $0.id == fallingElement.id }) {
                     fallingElements[index].isCollided = true
@@ -201,10 +208,12 @@ final class GameViewModel: ObservableObject {
         lastSpawnTime = CACurrentMediaTime()
         isScoreProcessed = false
         
+        // Reset vertices with current skin elements
+        let currentElements = skinManager.selectedSkin.elements
         let initialVertices = [
-            Vertex(element: .fire),
-            Vertex(element: .earth),
-            Vertex(element: .ice)
+            Vertex(element: currentElements[0]),  // ice
+            Vertex(element: currentElements[2]),  // earth
+            Vertex(element: currentElements[1])   // fire
         ]
         vertices = gameState.gameMode == .oneFinger ? [initialVertices] : [initialVertices, initialVertices]
         

@@ -15,7 +15,7 @@ struct RulesView: View {
             BackButton()
                 .padding()
             
-            Rectngl(width: 300, height: 300)
+            Rectngl(width: 300, height: 350)
                 .overlay {
                     VStack(spacing: 20) {
                         Text("RULES")

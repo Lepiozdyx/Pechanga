@@ -32,7 +32,7 @@ struct MainMenuView: View {
                     
                     HStack {
                         NavigationLink {
-                            // ShopView()
+                             ShopView()
                         } label: {
                             CapsuleButton(text: "SHOP", width: 260, height: 54)
                         }

@@ -35,6 +35,11 @@ final class GameManager: ObservableObject {
         saveGameData()
     }
     
+    func deductPoints(_ points: Int) {
+        totalPoints = max(0, totalPoints - points)
+        saveGameData()
+    }
+    
     func updateHighScore(score: Int, mode: GameMode) {
         switch mode {
         case .oneFinger:
