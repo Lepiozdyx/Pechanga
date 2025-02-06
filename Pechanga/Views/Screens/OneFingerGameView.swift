@@ -2,7 +2,7 @@
 //  OneFingerGame.swift
 //  Pechanga
 //
-//  Created by Alex on 03.02.2025.
+//  Created by J on 03.02.2025.
 //
 
 import SwiftUI
@@ -77,7 +77,15 @@ struct OneFingerGameView: View {
                     for element in viewModel.fallingElements {
                         let image = context.resolve(Image(element.element.imageName))
                         context.opacity = element.opacity
-                        context.draw(image, at: element.position, anchor: .center)
+                        
+                        let rect = CGRect(
+                            x: element.position.x - GameConfig.elementSize/2,
+                            y: element.position.y - GameConfig.elementSize/2,
+                            width: GameConfig.elementSize,
+                            height: GameConfig.elementSize * 1.6
+                        )
+                        
+                        context.draw(image, in: rect)
                     }
                 }
             }

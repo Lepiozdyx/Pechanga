@@ -2,7 +2,7 @@
 //  RulesView.swift
 //  Pechanga
 //
-//  Created by Alex on 06.02.2025.
+//  Created by J on 06.02.2025.
 //
 
 import SwiftUI

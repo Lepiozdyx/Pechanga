@@ -2,7 +2,7 @@
 //  TwoFingersGameView.swift
 //  Pechanga
 //
-//  Created by Alex on 06.02.2025.
+//  Created by J on 06.02.2025.
 //
 
 import SwiftUI
@@ -80,7 +80,17 @@ struct TwoFingersGameView: View {
                     for element in viewModel.fallingElements {
                         let image = context.resolve(Image(element.element.imageName))
                         context.opacity = element.opacity
-                        context.draw(image, at: element.position, anchor: .center)
+                        
+                        // Создаем прямоугольник с нужными размерами
+                        let rect = CGRect(
+                            x: element.position.x - GameConfig.elementSize/2,
+                            y: element.position.y - GameConfig.elementSize/2,
+                            width: GameConfig.elementSize,
+                            height: GameConfig.elementSize * 1.6
+                        )
+                        
+                        // Рисуем изображение в заданном прямоугольнике
+                        context.draw(image, in: rect)
                     }
                 }
             }

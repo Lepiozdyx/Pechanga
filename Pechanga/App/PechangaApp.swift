@@ -2,7 +2,7 @@
 //  PechangaApp.swift
 //  Pechanga
 //
-//  Created by Alex on 01.02.2025.
+//  Created by J on 01.02.2025.
 //
 
 import SwiftUI

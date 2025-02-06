@@ -2,7 +2,7 @@
 //  TopBarButton.swift
 //  Pechanga
 //
-//  Created by Alex on 05.02.2025.
+//  Created by J on 05.02.2025.
 //
 
 import SwiftUI

@@ -2,7 +2,7 @@
 //  ShopView.swift
 //  Pechanga
 //
-//  Created by Alex on 06.02.2025.
+//  Created by J on 06.02.2025.
 //
 
 import SwiftUI
@@ -10,8 +10,6 @@ import SwiftUI
 struct ShopView: View {
     @StateObject private var skinManager = SkinManager.shared
     @StateObject private var gameManager = GameManager.shared
-    
-//    var isIPad: Bool { UIDevice.current.userInterfaceIdiom == .pad}
     
     var body: some View {
         ZStack {

@@ -2,7 +2,7 @@
 //  Game.swift
 //  Pechanga
 //
-//  Created by Alex on 04.02.2025.
+//  Created by J on 04.02.2025.
 //
 
 import SwiftUI
@@ -71,7 +71,7 @@ struct FallingElement: Identifiable, Equatable {
     var opacity: Double = 1.0
     var isCollided: Bool = false
     let startTime: TimeInterval
-    let targetTriangleIndex: Int  // New property to identify target triangle
+    let targetTriangleIndex: Int
     
     static func == (lhs: FallingElement, rhs: FallingElement) -> Bool {
         lhs.id == rhs.id
@@ -86,9 +86,11 @@ enum GameConfig {
     static let elementSpawnInterval: TimeInterval = 2.0
     static let elementFallDuration: TimeInterval = 4.0
     static let elementSize: CGFloat = 50
+    static let triangleSize: CGFloat = 160
+    static let triangleElementSize: CGFloat = 50
     static let rotationAngle: Double = 120
-    static let maxLives: Int = 3  // New constant for two fingers mode
-    static let triangleSpacing: CGFloat = 8  // Spacing between triangles
+    static let maxLives: Int = 3
+    static let triangleSpacing: CGFloat = 8
 }
 
 struct GameState {

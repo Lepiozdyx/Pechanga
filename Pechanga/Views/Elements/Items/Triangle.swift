@@ -2,7 +2,7 @@
 //  Triangle.swift
 //  Pechanga
 //
-//  Created by Alex on 04.02.2025.
+//  Created by J on 04.02.2025.
 //
 
 import SwiftUI
@@ -13,8 +13,7 @@ struct Triangle: View {
     let triangleIndex: Int
     var onTap: (Int) -> Void
     
-    private let triangleSize: CGFloat = 160
-    private let elementSize: CGFloat = 40
+    private let triangleSize: CGFloat = GameConfig.triangleSize
     private let rotationAnchor = UnitPoint(x: 0.5, y: 0.60)
     
     var body: some View {
@@ -37,13 +36,13 @@ struct Triangle: View {
                 // Bottom left position
                 ElementView(
                     element: vertices[1].element,
-                    offset: CGPoint(x: -triangleSize * 0.3, y: triangleSize * 0.3)
+                    offset: CGPoint(x: -triangleSize * 0.3, y: triangleSize * 0.25)
                 )
                 
                 // Bottom right position
                 ElementView(
                     element: vertices[2].element,
-                    offset: CGPoint(x: triangleSize * 0.3, y: triangleSize * 0.3)
+                    offset: CGPoint(x: triangleSize * 0.3, y: triangleSize * 0.25)
                 )
             }
         }
@@ -63,7 +62,7 @@ private struct ElementView: View {
         Image(element.imageName)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: 40)
+            .frame(height: GameConfig.triangleElementSize)
             .offset(x: offset.x, y: offset.y)
     }
 }

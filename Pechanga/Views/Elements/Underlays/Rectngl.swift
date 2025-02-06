@@ -2,7 +2,7 @@
 //  Rectngl.swift
 //  Pechanga
 //
-//  Created by Alex on 02.02.2025.
+//  Created by J on 02.02.2025.
 //
 
 import SwiftUI

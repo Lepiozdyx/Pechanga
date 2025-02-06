@@ -2,7 +2,7 @@
 //  GameViewModel.swift
 //  Pechanga
 //
-//  Created by Alex on 04.02.2025.
+//  Created by J on 04.02.2025.
 //
 
 import SwiftUI
