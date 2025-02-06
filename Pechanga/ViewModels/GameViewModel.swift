@@ -34,9 +34,9 @@ final class GameViewModel: ObservableObject {
         let skinManager = SkinManager.shared
         let currentElements = skinManager.selectedSkin.elements
         let initialVertices = [
-            Vertex(element: currentElements[0]),  // ice
-            Vertex(element: currentElements[2]),  // earth
-            Vertex(element: currentElements[1])   // fire
+            Vertex(element: currentElements[0]),
+            Vertex(element: currentElements[2]),
+            Vertex(element: currentElements[1])
         ]
         
         self.gameState = GameState(gameMode: gameMode)
@@ -126,11 +126,8 @@ final class GameViewModel: ObservableObject {
         guard triangleIndex < trianglePositions.count else { return }
         
         let targetPosition = trianglePositions[triangleIndex]
-        
-        // Get random base element and map it to current skin
-        let baseElement = Element.allCases.filter { $0.baseElement == $0 }.randomElement() ?? .fire
         let currentSkinElements = skinManager.selectedSkin.elements
-        let skinElement = currentSkinElements.first { $0.baseElement == baseElement } ?? baseElement
+        let randomElement = currentSkinElements.randomElement() ?? .fire
         
         let startPosition = CGPoint(
             x: targetPosition.x,
@@ -139,7 +136,7 @@ final class GameViewModel: ObservableObject {
         
         withAnimation(.easeIn(duration: 0.3)) {
             let newElement = FallingElement(
-                element: skinElement,
+                element: randomElement,
                 position: startPosition,
                 startTime: CACurrentMediaTime(),
                 targetTriangleIndex: triangleIndex
@@ -185,8 +182,7 @@ final class GameViewModel: ObservableObject {
         let topVertex = vertices[triangleIndex][0]
         
         withAnimation(.easeOut(duration: 0.2)) {
-            // Compare base elements for collision check
-            if topVertex.element.baseElement == fallingElement.element.baseElement {
+            if topVertex.element == fallingElement.element {
                 gameState.incrementScore()
                 if let index = fallingElements.firstIndex(where: { $0.id == fallingElement.id }) {
                     fallingElements[index].isCollided = true

@@ -20,17 +20,6 @@ enum Element: String, CaseIterable, Codable {
     var imageName: String {
         rawValue
     }
-    
-    var baseElement: Element {
-        switch self {
-        case .fire, .fire1, .fire2:
-            return .fire
-        case .ice, .ice1, .ice2:
-            return .ice
-        case .earth, .earth1, .earth2:
-            return .earth
-        }
-    }
 }
 
 enum ElementSkin: String, CaseIterable, Codable {
