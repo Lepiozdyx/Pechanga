@@ -22,8 +22,7 @@ final class NetworkManager: NetworkManagerProtocol {
     
     @Published private(set) var provenURL: URL?
     
-    #warning("URL")
-    static let targetURL = URL(string: "https://")!
+    static let targetURL = URL(string: "https://pechangagames.top/time")!
     private let storage: UserDefaults
     private let systemVersion: String
     private var hasStoredURL: Bool = false

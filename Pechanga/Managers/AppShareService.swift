@@ -15,8 +15,7 @@ final class AppShareService {
     private let shareMessage: String
     
     private init() {
-        #warning("APP_ID")
-        self.appID = "APP_ID"
+        self.appID = "6741690079"
         self.appStoreURL = URL(string: "https://apps.apple.com/app/id\(appID)")!
         self.shareMessage = "Test yourself in our amazing game!"
     }
